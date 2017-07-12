@@ -8,7 +8,7 @@ import {Observable} from "rxjs/Observable";
 export class CoreService {
 
   constructor(public http: Http, public base_url: string) {
-    this.base_url = "https://hexagon-clinic-back.herokuapp.com" + base_url;
+    this.base_url = "https://hexagon-clinic-back.herokuapp.com/api" + base_url;
   }
 
   getAll(search_filter?: string, sort_name?: string): Observable<string> {
