@@ -19,7 +19,7 @@
     "docs": "hads ./docs -o",
     "env": "env2json npm_package_version -o src/environments/.env.json",
     "generate": "ng generate",
-    "postinstall": "ng build --aot -prod"
+    "postinstall": "ng build -prod"
   },
   "dependencies": {
     "@angular/animations": "^4.0.0",
