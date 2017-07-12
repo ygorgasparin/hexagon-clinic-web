@@ -1,0 +1,14 @@
+{
+  "APP_NAME": "Hexagon Clinic",
+  "Version": "Version",
+  "Home": "Home",
+  "About": "About",
+  "Logged in as": "Logged in as",
+  "Logout": "Logout",
+  "Username": "Username",
+  "Password": "Password",
+  "Username or password incorrect.": "Username or password incorrect.",
+  "Username is required": "Username is required",
+  "Password is required": "Password is required",
+  "Login": "Login"
+}

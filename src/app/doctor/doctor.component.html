@@ -1,0 +1,146 @@
+<div class="container-fluid">
+    <div class="jumbotron text-center">
+        <h1><span>Doctor</span></h1>
+        <h4><span translate>APP_NAME</span></h4>
+        <br/>
+    </div>
+
+    <div>
+
+        <div class="table-header">
+            <div class="search-container">
+
+                <form class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="search" class="form-control input-lg" placeholder="Search"
+                                   name="search"
+                                   [(ngModel)]="search_filter">
+
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" (click)="getAllDoctors()">
+                                    <i class="fa fa-search"></i>Search
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="action-container">
+                <button class="btn btn-primary" (click)="open(modal)"><i class="fa fa-plus fa-caret-down"></i> Add New
+                </button>
+            </div>
+        </div>
+
+        <table class="table table-striped">
+
+            <app-loader [isLoading]="isLoading"></app-loader>
+
+            <thead>
+            <tr>
+                <th>#</th>
+                <th class="sortable" (click)="toggleSortName()"
+                    [ngClass]="{'sort-asc': sort_name_status == 'asc', 'sort-desc':sort_name_status == 'desc'}">Name
+                </th>
+                <th>Phone</th>
+                <th>CPF</th>
+                <th class="sortable" (click)="toggleSortCRM()"
+                    [ngClass]="{'sort-asc': sort_crm_status == 'asc', 'sort-desc':sort_crm_status == 'desc'}">CRM
+                </th>
+                <th>Specialities</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody [hidden]="isLoading">
+
+            <tr class="tr-no-results" *ngIf="doctors && doctors.length == 0">
+                No record found
+            </tr>
+
+            <tr *ngFor="let doctor of doctors">
+                <th scope="row">{{doctor.id}}</th>
+                <td>{{doctor.name}}</td>
+                <td>{{doctor.phone}}</td>
+                <td>{{doctor.cpf}}</td>
+                <td>{{doctor.crm}}</td>
+                <td>
+                    <span *ngFor="let sp of doctor.doctorSpecialities" class="badge badge-speciality badge-info">
+                        {{sp.name}}
+                    </span>
+                </td>
+                <td class="td-action">
+                    <button class="btn btn-default" (click)="open(modal,doctor)"><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-default" (click)="deleteDoctor(doctor)"><i class="fa fa-remove"></i></button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<ng-template #modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" translate>New Doctor</h4>
+    </div>
+    <form>
+
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="name">Doctor Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Name"
+                       [(ngModel)]="selected_doctor.name">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" class="form-control" id="phone" placeholder="Phone" name="Phone"
+                       [(ngModel)]="selected_doctor.phone">
+            </div>
+
+            <div class="form-group">
+                <label for="cpf">CPF</label>
+                <input type="text" class="form-control" id="cpf" placeholder="CPF" [textMask]="cpf_mask"
+                       (focusout)="checkCPF()"
+                       name="cpf" [(ngModel)]="selected_doctor.cpf">
+                <span [hidden]="is_cpf_valid">Invalid CPF</span>
+            </div>
+
+            <div class="form-group">
+                <label for="crm">CRM</label>
+                <input type="text" class="form-control" id="crm" placeholder="CRM"
+                       name="crm" [(ngModel)]="selected_doctor.crm">
+            </div>
+
+            <div class="form-group">
+                <div ngbDropdown class="d-inline-block">
+                    <button type="button" class="btn btn-outline-default" id="ddSpecialities" ngbDropdownToggle>
+                        Specialities
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="ddSpecialities">
+                        <button type="button" class="dropdown-item" *ngFor="let speciality of specialities"
+                                [ngClass]="{ 'active': selected_doctor.doctorSpecialities && selected_doctor.doctorSpecialities.indexOf(speciality) > -1}"
+                                (click)="toggleSpeciality(speciality)">
+                            {{speciality.id}} - {{speciality.name}}
+                        </button>
+                    </div>
+                    <span *ngFor="let sp of selected_doctor.doctorSpecialities"
+                          class="badge badge-clickable badge-speciality badge-info"
+                          (click)="toggleSpeciality(sp)">
+                        {{sp.name}}
+                        <i class="fa fa-remove"></i>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="saveDoctor(selected_doctor)" [disabled]="!is_cpf_valid">Submit</button>
+            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        </div>
+    </form>
+
+</ng-template>

@@ -1,0 +1,86 @@
+<div class="container-fluid">
+    <div class="jumbotron text-center">
+        <h1><span>Speciality</span></h1>
+        <h4><span translate>APP_NAME</span></h4>
+        <br/>
+    </div>
+
+    <div>
+        <div class="table-header">
+            <div class="search-container">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="search" class="form-control input-lg" placeholder="Search"
+                                   name="search" [(ngModel)]="search_filter">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" (click)="getAll()">
+                                    <i class="fa fa-search"></i>Search
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="action-container">
+                <button class="btn btn-primary" (click)="open(modal)"><i class="fa fa-plus fa-caret-down"></i> Add New
+                </button>
+            </div>
+        </div>
+
+        <table class="table table-striped">
+
+            <app-loader [isLoading]="isLoading"></app-loader>
+
+            <thead>
+            <tr>
+                <th>#</th>
+                <th class="sortable" (click)="toggleSortName()"
+                    [ngClass]="{'sort-asc': sort_name_status == 'asc', 'sort-desc':sort_name_status == 'desc'}">Name
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody [hidden]="isLoading">
+
+            <tr class="tr-no-results" *ngIf="specialities && specialities.length == 0">
+                No record found
+            </tr>
+
+            <tr *ngFor="let s of specialities">
+                <th scope="row">{{s.id}}</th>
+                <td>{{s.name}}</td>
+
+                <td class="td-action">
+                    <button class="btn btn-default" (click)="open(modal,s)"><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-default" (click)="delete(s)"><i class="fa fa-remove"></i></button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<ng-template #modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" translate>New Speciality</h4>
+    </div>
+    <form>
+
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="name">Speciality Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Name"
+                       [(ngModel)]="selected_speciality.name">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="save(selected_speciality)">Submit</button>
+            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        </div>
+    </form>
+
+</ng-template>
