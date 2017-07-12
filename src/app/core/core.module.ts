@@ -39,11 +39,11 @@ export function createHttpService(backend: ConnectionBackend,
     AuthenticationGuard,
     I18nService,
     HttpCacheService,
-    {
-      provide: Http,
-      deps: [XHRBackend, RequestOptions, HttpCacheService],
-      useFactory: createHttpService
-    }
+    // {
+    //   provide: Http,
+    //   deps: [XHRBackend, RequestOptions, HttpCacheService],
+    //   useFactory: createHttpService
+    // }
   ]
 })
 export class CoreModule {
