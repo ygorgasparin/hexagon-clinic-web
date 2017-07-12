@@ -7,18 +7,10 @@
     "npm": "3.19"
   },
   "scripts": {
-    "ng": "ng",
     "build": "npm run env && ng build --aot --prod",
     "start": "node server.js",
     "start-2": "ng serve --proxy-config proxy.conf.js",
-    "lint": "ng lint --type-check && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
-    "test": "ng test",
-    "test:ci": "npm run lint && ng test --single-run --code-coverage",
-    "e2e": "ng e2e",
-    "translations:extract": "ngx-translate-extract --input ./src --output ./src/translations/template.json --format=json --clean -sort --marker extract",
-    "docs": "hads ./docs -o",
     "env": "env2json npm_package_version -o src/environments/.env.json",
-    "generate": "ng generate",
     "postinstall": "ng build -prod"
   },
   "dependencies": {
@@ -35,6 +27,7 @@
     "@angular/router": "^4.0.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.27",
     "@ngx-translate/core": "^7.0.0",
+    "@types/lodash": "^4.14.68",
     "angular2-text-mask": "^8.0.2",
     "bootstrap": "4.0.0-alpha.6",
     "core-js": "^2.4.1",
@@ -49,7 +42,6 @@
     "@biesbjerg/ngx-translate-extract": "^2.3.1",
     "@types/jasmine": "^2.5.52",
     "@types/jasminewd2": "^2.0.2",
-    "@types/lodash": "^4.14.68",
     "@types/node": "^8.0.0",
     "codelyzer": "~3.1.1",
     "env2json": "^1.0.0",
